@@ -10,6 +10,10 @@ class DisplayInfor extends React.Component {
         }
     }
 
+    componentDidMount() {
+
+    }
+
     handleShow = (event) => {
         this.setState({
             isShow: !this.state.isShow
@@ -54,5 +58,41 @@ class DisplayInfor extends React.Component {
         )
     }
 }
+
+// const DisplayInfor = (props) => {
+//     const { listUsers } = props;
+//     console.log(listUsers);
+//     return (
+//         <>
+//             <div className="display-infor-container">
+//                 <img src={logo} style={{ width: "40px" }} />
+
+
+//                 {/* <div>{this.props.address}</div> */}
+//                 <button onClick={(event) => this.handleShow(event)}>Hide</button>
+
+
+//                 {true &&
+//                     <>
+//                         {listUsers.map((item, index) => {
+//                             return (
+//                                 <>
+
+//                                     <div key={item.id} className={item.age > 18 ? "red" : "green"}>
+//                                         <div>{item.name}</div>
+//                                         <div>{item.age}</div>
+//                                         <hr />
+//                                     </div >
+//                                     {/* <button onClick={() => handleDeleteUser(item.id)}>X</button> */}
+//                                 </>
+
+//                             )
+//                         })}
+//                     </>
+//                 }
+//             </div>
+//         </>
+//     )
+// }
 
 export default DisplayInfor
