@@ -1,32 +1,80 @@
-.sidebar-btn-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.pro-sidebar {
+    .pro-sidebar-inner {
+        background-color: #c2ffe9;
+    }
 
-    .sidebar-btn {
-        transition: width 0.3s;
-        width: 150px;
-        padding: 1px 5px;
-        border-radius: 40px;
-        background: rgba(255, 255, 255, 0.05);
-        color: #adadad;
-        text-decoration: none;
-        margin: 0 auto;
-        height: 35px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-overflow: ellipsis;
-        overflow: hidden;
-
-        span {
-            margin-left: 5px;
-            font-size: 13px;
+    .pro-menu {
+        .pro-menu-item {
+            span {
+                color: black;
+            }
         }
 
-        &:hover {
-            color: #dee2ec;
-            ;
+        .pro-inner-item {
+            .pro-icon-wrapper {
+                .pro-icon {
+                    background-color: white;
+                    border-radius: 50%;
+                }
+            }
+
+
+        }
+
+        ul {
+            .pro-sub-menu {
+                .pro-inner-list-item {
+                    background-color: white;
+
+                    .pro-inner-item {
+                        .pro-item-content {
+                            &:hover {
+                                color: rgb(10, 122, 85);
+                                font-size: 16px;
+                                font-weight: 600;
+                            }
+                        }
+
+                    }
+
+
+                }
+            }
+        }
+
+        .sidebar-btn-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+
+
+            .sidebar-btn {
+                transition: width 0.3s;
+                width: 150px;
+                padding: 1px 5px;
+                border-radius: 40px;
+                background: rgba(255, 255, 255, 0.05);
+                color: #adadad;
+                text-decoration: none;
+                margin: 0 auto;
+                height: 35px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-overflow: ellipsis;
+                overflow: hidden;
+
+                span {
+                    margin-left: 5px;
+                    font-size: 13px;
+                }
+
+                &:hover {
+                    color: #dee2ec;
+                    ;
+                }
+            }
         }
     }
 }

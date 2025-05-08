@@ -1,0 +1,19 @@
+.admin-container {
+    flex-direction: row;
+    display: flex;
+
+    .admin-sidebar {
+        height: 100vh;
+    }
+
+    .admin-content {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        .admin-header {
+            border: 1px solid green;
+            height: 40px;
+        }
+    }
+}

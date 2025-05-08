@@ -8,7 +8,6 @@ const App = () => {
   const dispatch = useDispatch();
 
   return (
-
     <div className='app-container'>
       <div className='header-container'>
         <Header />
