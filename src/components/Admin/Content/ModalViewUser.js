@@ -8,8 +8,8 @@ import { toast } from 'react-toastify';
 import { updateUser } from '../../../services/apiService';
 import _ from 'lodash';
 
-const ModalUpdateUser = (props) => {
-    const { show, setShow, fetchListUser, dataUpdate, resetDataUser } = props;
+const ModalViewUser = (props) => {
+    const { show, setShow, fetchListUser, dataUser, resetDataUser } = props;
     const handleClose = () => {
         setEmail('');
         setPassword('');
@@ -21,19 +21,18 @@ const ModalUpdateUser = (props) => {
         setShow(false);
     }
     useEffect(() => {
-        if (!_.isEmpty(dataUpdate)) {
-            setEmail(dataUpdate.email);
-            setUsername(dataUpdate.username);
-            setRole(dataUpdate.role);
-            if (dataUpdate.image) {
-                setPreviewImage(`data:image/jpeg;base64,${dataUpdate.image}`);
+        if (!_.isEmpty(dataUser)) {
+            setEmail(dataUser.email);
+            setUsername(dataUser.username);
+            setRole(dataUser.role);
+            if (dataUser.image) {
+                setPreviewImage(`data:image/jpeg;base64,${dataUser.image}`);
             }
             setImage('');
         }
-        console.log('run')
-    }, [dataUpdate])
+        // console.log('run')
+    }, [dataUser])
 
-    // const handleShow = () => setShow(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
@@ -50,53 +49,23 @@ const ModalUpdateUser = (props) => {
         }
 
     }
-    const validateEmail = (email) => {
-        return String(email)
-            .toLowerCase()
-            .match(
-                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            );
-    };
-    const handleUpdateUser = async () => {
-        //validate
-        const isValidEmail = validateEmail(email);
-
-        const errors = [];
-        if (!isValidEmail) errors.push('email');
-        if (!username) errors.push('username');
-        if (errors.length > 0) {
-            toast.error(`Invalid ${errors.join(', ')}`);
-            return;
-        }
-        let data = await updateUser(dataUpdate.id, username, role, image);
-        if (data && data.EC === 0) {
-            toast.success(data.EM);
-            // await fetchListUser();
-            await props.fetchListUserWithPaginate(props.currentPage);
-            handleClose();
-        }
-        if (data && data.EC !== 0) {
-            toast.error(data.EM);
-        }
-        console.log('check res:', data);
-    }
     return (
         <>
             <Modal show={show} onHide={handleClose} className='modal-add-user'>
                 <Modal.Header closeButton>
-                    <Modal.Title>Update a User</Modal.Title>
+                    <Modal.Title>View a User</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form >
                         <div className="row">
                             <div className="col-md-6 mb-3">
                                 <label htmlFor="email" className="form-label">Email</label>
-                                <input type="email" className="form-control" id="email" placeholder="Enter email" value={email} onChange={(event) => setEmail(event.target.value)} disabled />
+                                <input type="email" className="form-control" id="email" placeholder="Enter email" value={email} onChange={(event) => setEmail(event.target.value)} />
                             </div>
 
                             <div className="col-md-6 mb-3">
                                 <label htmlFor="password" className="form-label">Password</label>
-                                <input type="password" className="form-control" id="password" placeholder="" value={password} onChange={(event) => setPassword(event.target.value)} disabled />
+                                <input type="password" className="form-control" id="password" placeholder="" value={password} onChange={(event) => setPassword(event.target.value)} />
                             </div>
                         </div>
 
@@ -140,13 +109,10 @@ const ModalUpdateUser = (props) => {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={() => handleUpdateUser()}>
-                        Save
-                    </Button>
                 </Modal.Footer>
             </Modal>
         </>
     );
 }
 
-export default ModalUpdateUser;
+export default ModalViewUser;

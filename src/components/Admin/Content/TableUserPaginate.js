@@ -1,13 +1,13 @@
-
+import ReactPaginate from "react-paginate";
 import { useState } from "react";
-const TableUser = (props) => {
-    const { listUsers } = props;
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5;
 
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = listUsers.slice(indexOfFirstItem, indexOfLastItem);
+const TableUserPaginate = (props) => {
+    const { listUsers, pageCount } = props;
+
+    const handlePageClick = (event) => {
+        props.fetchListUserWithPaginate(+event.selected + 1);
+        props.setCurrentPage(+event.selected + 1);
+    }
     return (
         <div>
             <table className="table table-hover table-bordered ">
@@ -21,10 +21,10 @@ const TableUser = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {currentItems ?
-                        (currentItems.map((item, index) => (
+                    {listUsers ?
+                        (listUsers.map((item, index) => (
                             <tr key={item.id}>
-                                <th scope="row">{indexOfFirstItem + index + 1}</th>
+                                <th scope="row">{(props.currentPage - 1) * props.itemPerPage + index + 1}</th>
                                 <td>{item.email}</td>
                                 <td>{item.username}</td>
                                 <td>{item.role}</td>
@@ -50,35 +50,31 @@ const TableUser = (props) => {
                     }
                 </tbody>
             </table>
-            <div className="pagination mt-3">
-                <button
-                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                    className="btn btn-outline-secondary mx-1"
-                    disabled={currentPage === 1}
-                >
-                    &laquo; Prev
-                </button>
-
-                {Array.from({ length: Math.ceil(listUsers.length / itemsPerPage) }, (_, i) => (
-                    <button
-                        key={i}
-                        onClick={() => setCurrentPage(i + 1)}
-                        className={currentPage === i + 1 ? 'btn btn-primary mx-1' : 'btn btn-outline-primary mx-1'}
-                    >
-                        {i + 1}
-                    </button>
-                ))}
-
-                <button
-                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, Math.ceil(listUsers.length / itemsPerPage)))}
-                    className="btn btn-outline-secondary mx-1"
-                    disabled={currentPage === Math.ceil(listUsers.length / itemsPerPage)}
-                >
-                    Next &raquo;
-                </button>
+            <div className="user-paginate d-flex justify-content-center">
+                <ReactPaginate
+                    nextLabel="next >"
+                    onPageChange={handlePageClick}
+                    pageRangeDisplayed={3}
+                    marginPagesDisplayed={2}
+                    pageCount={pageCount}
+                    previousLabel="< previous"
+                    pageClassName="page-item"
+                    pageLinkClassName="page-link"
+                    previousClassName="page-item"
+                    previousLinkClassName="page-link"
+                    nextClassName="page-item"
+                    nextLinkClassName="page-link"
+                    breakLabel="..."
+                    breakClassName="page-item"
+                    breakLinkClassName="page-link"
+                    containerClassName="pagination"
+                    activeClassName="active"
+                    renderOnZeroPageCount={null}
+                    forcePage={props.currentPage - 1}
+                />
             </div>
 
         </div>
     )
 }
-export default TableUser;
+export default TableUserPaginate;

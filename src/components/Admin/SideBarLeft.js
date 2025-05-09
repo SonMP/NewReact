@@ -15,7 +15,7 @@ import sidebarBg from '../../assets/image2.jpg';
 
 import { DiReact } from "react-icons/di";
 import { MdDashboard } from "react-icons/md";
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import './SideBar.scss';
 
@@ -45,8 +45,12 @@ const SideBar = (props) => {
                             whiteSpace: 'nowrap',
                         }}
                     >
-                        <DiReact size={'3em'} color={"00bfff"} />
-                        <span style={{ color: 'rgb(137, 124, 255)' }} > Sahurrr</span>
+
+                        <NavLink to='/' className='nav-link'>
+                            <DiReact size={'3em'} color={"00bfff"} />
+                            <span style={{ color: 'rgb(137, 124, 255)' }} >Sahurrr</span>
+                        </NavLink>
+
                     </div>
                 </SidebarHeader>
 
