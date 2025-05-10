@@ -13,6 +13,10 @@ import { postLogin } from "../../services/apiService";
 import { toast } from "react-toastify";
 import { useNavigate, Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { doLogin } from "../../redux/action/userAction";
+import { CgSpinnerTwo } from "react-icons/cg";
+import './Login.scss';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -20,6 +24,8 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const dispatch = useDispatch();
 
     const validateEmail = (email) => {
         return String(email)
@@ -40,13 +46,17 @@ const Login = () => {
             toast.error('Invalid password!');
             return;
         }
+        setIsLoading(true);
         let res = await postLogin(email, password);
         if (res && +res.EC === 0) {
+            dispatch(doLogin(res));
             toast.success(res.EM);
+            setIsLoading(false);
             navigate('/');
         }
         if (res && +res.EC !== 0) {
             toast.error(res.EM);
+            setIsLoading(true);
         }
         setError("");
     };
@@ -57,7 +67,7 @@ const Login = () => {
     };
 
     return (
-        <Container fluid className="bg-light min-vh-100 d-flex justify-content-center align-items-center">
+        <Container fluid className="bg-light min-vh-100 d-flex justify-content-center align-items-center login-container">
             <Row>
                 <Col>
                     <Card className="shadow-lg p-4" style={{ width: "100%", width: "450px", borderRadius: "1rem" }}>
@@ -116,8 +126,12 @@ const Login = () => {
                                     </a>
                                 </div>
 
-                                <Button variant="primary" type="submit" className="w-100">
-                                    Đăng nhập
+                                <Button variant="primary" type="submit" className="w-100  btn-login" disabled={isLoading}>
+                                    <CgSpinnerTwo className="loaderIcon" />
+                                    <span>
+                                        Đăng nhập
+                                    </span>
+
                                 </Button>
 
                                 <div className="text-center my-3 text-muted">hoặc</div>
